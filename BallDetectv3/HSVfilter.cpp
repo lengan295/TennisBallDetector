@@ -7,7 +7,7 @@
 using namespace std;
 using namespace cv;
 
-int main2(int argc, char* argv[])
+void detect()
 {
 	//IplImage *image = cvLoadImage("ball.jpg");
 	CvCapture* capture = cvCaptureFromCAM( 0 );
@@ -16,7 +16,7 @@ int main2(int argc, char* argv[])
     {
             printf( "ERROR: capture is NULL \n" );
             getchar();
-            return -1;
+            return;
     }
 
 	IplImage* image = cvQueryFrame( capture );;
@@ -110,5 +110,4 @@ int main2(int argc, char* argv[])
 	//cvWaitKey(0);
 	
 	cvReleaseCapture( &capture );
-    return 0;
 }

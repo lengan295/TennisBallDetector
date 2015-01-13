@@ -7,7 +7,7 @@
 using namespace std;
 using namespace cv;
 
-int main(int argc, char* argv[])
+void detect_mat()
 {
 	//IplImage *image = cvLoadImage("ball.jpg");
 	VideoCapture capture(0); // open the default camera
@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     {
             printf( "ERROR: capture is NULL \n" );
             getchar();
-            return -1;
+            return;
     }
 
 	//IplImage* image = cvQueryFrame( capture );;
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 		vector<Vec3f> circles;
 
 		/// Apply the Hough Transform to find the circles
-		HoughCircles( thresholded, circles, CV_HOUGH_GRADIENT, 1, thresholded.rows/8, 200, 100, 0, 0 );
+		HoughCircles( thresholded, circles, CV_HOUGH_GRADIENT, 1, thresholded.rows/4, 50, 180, 5, 0 );
 		printf("%d\n",circles.size());
 		for( size_t i = 0; i < circles.size(); i++ )
 		{
@@ -135,5 +135,4 @@ int main(int argc, char* argv[])
 	//cvWaitKey(0);
 	
 	//cvReleaseCapture( &capture );
-    return 0;
 }
