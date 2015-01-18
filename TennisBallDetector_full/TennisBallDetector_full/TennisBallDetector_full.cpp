@@ -76,8 +76,18 @@ void detect_mat()
 
 		/// Apply the Hough Transform to find the circles
 		HoughCircles( thresholded, circles, CV_HOUGH_GRADIENT, 2, thresholded.rows/8, 200, 100, 0, 0 );
+		
+		int c = circles.size();
 		printf("%d\n",circles.size());
+		if(c>0)
+		{
+			Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));
+			int radius = cvRound(circles[0][2]);
+			// circle outline
+			circle( image, center, radius, Scalar(0,0,255), 3, 8, 0 );
+		}
 
+		/*
 		for( size_t i = 0; i < circles.size(); i++ )
 		{
 			Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
@@ -86,7 +96,7 @@ void detect_mat()
 			circle( image, center, 3, Scalar(0,255,0), -1, 8, 0 );
 			// circle outline
 			circle( image, center, radius, Scalar(0,0,255), 3, 8, 0 );
-		}		
+		}*/		
            
         imshow( "Original", image ); // Original stream with detected ball overlay
         imshow( "After Color Filtering", thresholded ); // The stream after color filtering
