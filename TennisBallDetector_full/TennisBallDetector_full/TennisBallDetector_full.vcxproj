@@ -82,6 +82,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ColorSelection.cpp" />
     <ClCompile Include="TennisBallDetector_full.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>

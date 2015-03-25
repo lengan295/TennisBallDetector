@@ -11,7 +11,7 @@ using namespace cv;
 void detect_mat();
 void detect();
 
-int main()
+int main2()
 {
 	detect_mat();
 	return 0;
@@ -59,7 +59,7 @@ void detect_mat()
 		Scalar hsv_max = cvScalar(t1max, t2max ,t3max, 0);
 
 		// Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
-        cvtColor(image, hsv_frame, CV_BGR2GRAY);
+        cvtColor(image, hsv_frame, CV_BGR2HSV);
 
 		//////////////////////////////////////////////////////////////
 		// Filter out colors which are out of range.

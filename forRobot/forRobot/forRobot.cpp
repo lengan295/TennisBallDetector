@@ -3,6 +3,9 @@
 #include <cxcore.h>
 #include <opencv2\opencv.hpp>
 
+#include <wiringPi.h>
+#include <wiringSerial.h>
+
 using namespace std;
 using namespace cv;
 
@@ -36,6 +39,7 @@ int main()
 	while(1)
 	{
 		capture >> image;
+		if(image.empty()) continue;
 		
 		Scalar hsv_min = cvScalar(t1min, t2min, t3min, 0);
 		Scalar hsv_max = cvScalar(t1max, t2max ,t3max, 0);
@@ -63,7 +67,7 @@ int main()
 		if(c>0)
 		{
 			Point center(cvRound(circles[0][0]), cvRound(circles[0][1]));		
-			xuly(center);
+			xuly(center, image);
 		}
 
 		if( waitKey(30) >= 0 ) break;
@@ -71,6 +75,34 @@ int main()
 	return 0;
 }
 
-void xuly(Point& center)
+void xuly(Point& center, Mat& image)
 {
+	int ser = serialOpen ("/dev/ttyACM0", 9600) ;
+	if (ser < 0){
+		fprintf (stderr, "Unable to open serial device: %s\n", strerror (errno)) ;
+		exit(1); //error
+	}
+ 
+	//setup GPIO in wiringPi mode
+	if (wiringPiSetup () == -1){
+		fprintf (stdout, "Unable to start wiringPi: %s\n", strerror (errno)) ;
+		exit(1); //error
+	}
+
+	if(center.x < image.cols/3)
+	{
+		//re trai
+		serialPutchar (ser, '1');
+	}
+	else if(center.x > image.cols*2/3)
+	{
+		//re phai
+		serialPutchar (ser, '3');
+	}
+	else
+	{
+		//di thang
+		serialPutchar (ser, '2');
+	}
+	serialClose (ser) ;
 }
